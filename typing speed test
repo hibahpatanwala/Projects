@@ -1,0 +1,44 @@
+from time import time
+
+def tperror(prompt, inwords):
+    errors = 0
+    words = prompt.split()
+    for i in range(len(inwords)):
+        if i == 0 or i == len(inwords) - 1:
+            if inwords[i] == words[i]:
+                continue
+            else:
+                errors += 1
+        else:
+            if inwords[i] == words[i]:
+                if inwords[i + 1] == words[i + 1] and inwords[i - 1] == words[i - 1]:
+                    continue
+                else:
+                    errors += 1
+            else:
+                errors += 1
+    return errors
+
+def speed(inprompt, stime, etime):
+    inwords = inprompt.split()
+    twords = len(inwords)
+    elapsed_time = etime - stime
+    speed = twords / (elapsed_time / 60)  # convert elapsed time to minutes
+    return speed
+
+def elapsedtime(stime, etime):
+    return etime - stime
+
+if __name__ == '__main__':
+    prompt = "Python is a well constructed language"
+    print("type this:-", prompt, "")
+    input("Press Enter when you are ready to check your speed")
+    stime = time()
+    inprompt = input()
+    etime = time()
+    elapsed_time = round(elapsedtime(stime, etime), 2)  # round off the time
+    speed_val = speed(inprompt, stime, etime)
+    errors = tperror(prompt, inprompt.split())
+    print("Total elapsed time", elapsed_time, "seconds")
+    print("Avg typing speed was", speed_val, "words per minute")
+    print("with the total of", errors, "errors")
